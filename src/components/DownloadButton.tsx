@@ -6,7 +6,7 @@ import { saveAs } from 'file-saver';
 import { ScreenAsset } from '../prototype/types';
 
 export interface ExtraFile {
-  /** Path inside the zip, e.g. `WeLoan_Design_System.md` or `style/Modern.md`. */
+  /** Path inside the zip, e.g. `WeLoan_Design_System.md` or `style/Sample_2.md`. */
   path: string;
   /** Inline string content. Mutually exclusive with `url`. */
   content?: string;

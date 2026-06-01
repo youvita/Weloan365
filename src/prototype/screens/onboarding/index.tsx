@@ -20,8 +20,8 @@ const OnboardingScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => {
     return () => clearInterval(interval);
   }, []);
 
-  // --- Modern: full-bleed editorial hero ---
-  if (variant === 'modern') {
+  // --- Sample 2: full-bleed editorial hero ---
+  if (variant === 'sample-2') {
     return (
       <Box sx={{ minHeight: '100%', backgroundColor: ui.mobileBg, display: 'flex', flexDirection: 'column' }}>
         <Box sx={{ position: 'relative', width: '100%', height: 280, overflow: 'hidden' }}>
@@ -166,8 +166,8 @@ const OnboardingScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => {
     );
   }
 
-  // --- Playful: rounded sheet with colored hero disc ---
-  if (variant === 'playful') {
+  // --- Sample 3: rounded sheet with colored hero disc ---
+  if (variant === 'sample-3') {
     return (
       <Box sx={{ minHeight: '100%', backgroundColor: ui.mobileBg, display: 'flex', flexDirection: 'column' }}>
         <Box
@@ -347,7 +347,7 @@ const OnboardingScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => {
     );
   }
 
-  // --- Classic (default) — original layout ---
+  // --- Sample 1 (default) — original layout ---
   return (
     <Box sx={{ minHeight: '100%', backgroundColor: ui.mobileBg, display: 'flex', flexDirection: 'column' }}>
       <Box

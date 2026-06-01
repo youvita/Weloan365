@@ -6,7 +6,7 @@ export const CREATE_ACCOUNT_MARKDOWN = `# Create Your Account
 
 **Screen:** Create Account
 **Status:** Production Ready
-**Background:** \`var(--mobile-bg)\` (Classic = #F2F3F5)
+**Background:** \`var(--mobile-bg)\` (Sample 1 = #F2F3F5)
 
 ## Frame (non-negotiable)
 
@@ -31,8 +31,8 @@ Code label            "Code *"        (asterisk in #E00025)
 Code value            "+855"
 Phone label           "Phone Number *" (asterisk in #E00025)
 Phone default value   "093333333"
-Primary CTA           "Send code"     (Classic / Modern)
-                      "Send my code →" (Playful only)
+Primary CTA           "Send code"     (Sample 1 / Sample 2)
+                      "Send my code →" (Sample 3 only)
 \`\`\`
 
 Asterisks (\`*\`) on required-field labels are rendered in danger red \`#E00025\` and sit immediately after the label text with no space.
@@ -58,7 +58,7 @@ Asterisks (\`*\`) on required-field labels are rendered in danger red \`#E00025\
   - Flag image \`/assets/flags/en.svg\` 22 × 16
   - Text "EN" 13px weight 600 #1A1A1A
 
-### Progress Bar (Classic)
+### Progress Bar (Sample 1)
 - 3 equal segments, gap 6, **height exactly 3 px**, border-radius 2
 - Active (step 1): \`var(--primary)\`
 - Inactive: #D0D3D7
@@ -102,22 +102,22 @@ Asterisks (\`*\`) on required-field labels are rendered in danger red \`#E00025\
 `;
 
 export const CREATE_ACCOUNT_VARIANT_NOTES: Record<UiStyleId, string> = {
-  classic: `## Sample 1 (Classic) — variant notes
+  'sample-1': `## Sample 1 — variant notes
 
 Baseline implementation. Frame stays at 375 × 760. 3-segment progress bar (3 px tall), country card + side-by-side code/phone cards, "Send code" button anchored at bottom (52 px tall).
 `,
-  modern: `## Sample 2 (Modern) — variant notes
+  'sample-2': `## Sample 2 — variant notes
 
-Underline / typographic form. Frame stays at 375 × 760.
+Underline / typographic form. Frame stays at 375 × 760. All three samples share the same brand tokens — the differences below are structural layout overrides only.
 - **Progress:** "STEP 1 OF 3" eyebrow (11 / 700, letter-spacing 0.5, text_tertiary) on the left + 3-segment thin progress lines on the right (each segment 24 × 2, gap 4). Active segment: \`var(--primary)\`.
 - **Heading:** 22 / 700, letter-spacing -0.5.
 - **Inputs:** card containers replaced with **underlined fields**. 11px uppercase field labels above. Country row: small circular flag (24 × 24) + select + chevron. Phone row: "+855" + 1px vertical divider + tel input. Border bottom \`1px solid #1A1A1A\` for both. No card backgrounds, no shadows.
 - **Code/Phone:** merged into a single underlined row (no separate "Code" card outline).
-- **CTA:** filled \`var(--primary)\` rectangle 48 × full-width, sharp 4 px radius.
+- **CTA:** filled \`var(--primary)\` rectangle, full-width, default token radius (\`var(--radius-button)\`).
 `,
-  playful: `## Sample 3 (Playful) — variant notes
+  'sample-3': `## Sample 3 — variant notes
 
-Centered, rounded, friendly. Frame stays at 375 × 760.
+Centered, rounded, friendly. Frame stays at 375 × 760. All three samples share the same brand tokens — the differences below are structural layout overrides only.
 - **Progress:** **3 numbered circles** (28 × 28, 50% radius), active uses \`var(--primary)\` fill + \`var(--on-primary)\` text; inactive uses \`var(--primary-tint)\` + \`var(--primary)\` text. Gap 8.
 - **Heading:** centered, 26 / 800.
 - **Inputs:** wrapped in a floating card (radius \`var(--radius-card)\` + 4, padding 16). Each field is a **pill row** (999 px radius) with a soft primary-tinted background. Country: 28 × 28 circular flag, label/value stacked, primary chevron. Phone: "+855" in \`var(--primary)\` + thin divider + tel input.

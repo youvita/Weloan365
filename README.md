@@ -53,8 +53,8 @@ The landing page shows every prototype screen as a card, arranged left-to-right 
 ### Screen preview (`/screen/:id`)
 Three tabs sit above the rendered mobile frame:
 
-- **UX** — the screen rendered in the Classic baseline. Use this to read the flow and layout without color noise.
-- **UI** — three samples (Classic / Modern / Playful) shown side-by-side. Click one to select it as the direction for this screen. The selection is per-screen and survives a refresh (stored in `localStorage`).
+- **UX** — the screen rendered in the Sample 1 baseline. Use this to read the flow and layout without color noise.
+- **UI** — three samples (Sample 1 / 2 / 3) shown side-by-side. Click one to select it as the direction for this screen. The selection is per-screen and survives a refresh (stored in `localStorage`).
 - **Design System** — only visible when developer mode is on. Shows the merged master + style profile + screen spec markdown, with copy and download buttons.
 
 ### Downloads (`/downloads`)
@@ -64,9 +64,9 @@ A single button — **Download bundled spec** — packages **all** screens into 
 WeLoan365_All_Specs.zip
 ├── WeLoan365_All_Specs.md          ← concatenated screen specs
 ├── WeLoan_Design_System.md         ← master design system
-├── WeLoan_Sample_1_Style.md        ← Classic style profile
-├── WeLoan_Sample_2_Style.md        ← Modern style profile
-├── WeLoan_Sample_3_Style.md        ← Playful style profile
+├── WeLoan_Sample_1_Style.md        ← Sample 1 style profile (shared brand tokens)
+├── WeLoan_Sample_2_Style.md        ← Sample 2 style profile (shared brand tokens)
+├── WeLoan_Sample_3_Style.md        ← Sample 3 style profile (shared brand tokens)
 └── assets/
     ├── banners/
     ├── flags/
@@ -127,7 +127,7 @@ src/
 ├── design-system/
 │   ├── tokens.ts                   Static design tokens shared across screens
 │   ├── theme.ts                    MUI theme wiring
-│   ├── variants.ts                 Classic / Modern / Playful style tokens
+│   ├── variants.ts                 Sample 1 / 2 / 3 style tokens
 │   └── profile-markdown.ts         Generates the per-style profile Markdown
 └── prototype/
     ├── registry.ts                 Single source of truth: every screen
@@ -142,7 +142,7 @@ src/
 
 | File         | Role                                                                                          |
 | ------------ | --------------------------------------------------------------------------------------------- |
-| `index.tsx`  | The React component. Reads `useSettings().uiStyleId` and branches between Classic / Modern / Playful. |
+| `index.tsx`  | The React component. Reads `useSettings().uiStyleId` and branches between Sample 1 / 2 / 3. |
 | `assets.ts`  | The asset manifest — every PNG / SVG the production design needs. Included in every download. |
 | `spec.md.ts` | Two exports: the master screen spec (`*_MARKDOWN`) and per-style notes (`*_VARIANT_NOTES`).  |
 | `config.ts`  | The `ScreenConfig` that wires the above together and registers it with the registry.          |
@@ -193,21 +193,22 @@ There are two layers:
 
 1. **Master** — `public/assets/design-system/master.md`. Edited as plain Markdown; checked into Git as-is. The Downloads zip and every screen's dev-mode bundle include this file verbatim. It defines the brand-neutral foundations: typography, spacing, semantic colors, component anatomy.
 
-2. **Style profiles** — `src/design-system/variants.ts` defines the three samples (Classic, Modern, Playful). Each profile **overrides** specific master tokens (`--primary`, `--card-bg`, radii, accent bar). The actual Markdown profile is generated from the tokens by `src/design-system/profile-markdown.ts`, so the document and the rendered preview can never drift out of sync.
+2. **Style profiles** — `src/design-system/variants.ts` defines the three samples (Sample 1, Sample 2, Sample 3). All three currently share the SAME design-system tokens (a single `BASE_STYLE_TOKENS` constant spread into each); the per-Sample differences live in screen layout (carousel vs list vs hero), not in colors or radii. The Markdown profile is generated from the tokens by `src/design-system/profile-markdown.ts`, so the document and the rendered preview can never drift out of sync.
 
 When you add or change a token in `variants.ts`:
 - The rendered React previews update immediately.
 - The `WeLoan_<style>_Style.md` profile in every download bundle picks the new values up automatically — no manual Markdown edit needed.
+- If you want a Sample to genuinely diverge on a token (e.g. give Sample 2 a different `cardShadow`), replace the spread of `BASE_STYLE_TOKENS` for that sample with its own values.
 
 ---
 
 ## 9. Common workflows
 
-### "I want to see what the Playful direction looks like for create-account"
+### "I want to see what Sample 3 looks like for create-account"
 - Open `/screen/create-account` → **UI** tab → click the **Sample 3** preview. The card border highlights, and the selection is saved.
 
-### "Designer picked Modern for onboarding — send it to engineering"
-- Open `/screen/onboarding` → **UI** tab → click **Sample 2** → flip on developer mode in **Settings** → back to the screen → **Download UX/UI Spec**. Send the resulting `WeLoan365_onboarding_modern_UI.zip`.
+### "Designer picked Sample 2 for onboarding — send it to engineering"
+- Open `/screen/onboarding` → **UI** tab → click **Sample 2** → flip on developer mode in **Settings** → back to the screen → **Download UX/UI Spec**. Send the resulting `WeLoan365_onboarding_sample-2_DesignSystem.zip`.
 
 ### "Give me one zip with everything"
 - `/downloads` → **Download bundled spec**.

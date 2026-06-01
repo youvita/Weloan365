@@ -6,7 +6,7 @@ export const ONBOARDING_MARKDOWN = `# Onboarding — Fast Loan Approvals
 
 **Screen:** Onboarding
 **Status:** Production Ready
-**Background:** \`var(--mobile-bg)\` (Classic = #F2F3F5)
+**Background:** \`var(--mobile-bg)\` (Sample 1 = #F2F3F5)
 
 ## Frame (non-negotiable)
 
@@ -110,13 +110,13 @@ Total content height ≈ 600 px, leaving the frame bottom whitespace under 760 p
 `;
 
 export const ONBOARDING_VARIANT_NOTES: Record<UiStyleId, string> = {
-  classic: `## Sample 1 (Classic) — variant notes
+  'sample-1': `## Sample 1 — variant notes
 
 Baseline implementation. Frame stays at 375 × 760. Full-bleed hero image carousel card (exactly 180 px tall, banners 1/2 + illustration_empty cycled every 5 s), pagination dots beneath, heading + description, two stacked buttons with an "Or" divider, footer "Create an account" link in \`var(--primary)\`.
 `,
-  modern: `## Sample 2 (Modern) — variant notes
+  'sample-2': `## Sample 2 — variant notes
 
-Full-bleed editorial hero. Frame stays at 375 × 760.
+Full-bleed editorial hero. Frame stays at 375 × 760. All three samples share the same brand tokens — the differences below are structural layout overrides only.
 - **Header:** floats over the image. Logo inverts to white via \`filter: brightness(0) invert(1)\`. EN pill becomes translucent white (\`rgba(255,255,255,0.16)\`) with backdrop blur.
 - **Hero illustration:** **exactly 280 px tall**, full-bleed image at the top, no padding. Pagination is a thin 3-segment progress bar in white (each segment 1/3 width, 2 px tall) at the bottom of the image, mb 12.
 - **Eyebrow tag:** "GET STARTED" in \`var(--primary)\`, uppercase, 11 / 700, mb 4, above the headline.
@@ -124,13 +124,13 @@ Full-bleed editorial hero. Frame stays at 375 × 760.
 - **CTAs:** *side-by-side row* (gap 8) — "Mobile sign-in" (primary, filled in \`var(--primary)\`) + "QR sign-in" (outlined, 1px #E0E0E0). Both 48 px tall, flex 1.
 - **Or divider** is removed — only the "Create an account" link remains below.
 `,
-  playful: `## Sample 3 (Playful) — variant notes
+  'sample-3': `## Sample 3 — variant notes
 
-Bottom-sheet pattern with a hero disc. Frame stays at 375 × 760.
+Bottom-sheet pattern with a hero disc. Frame stays at 375 × 760. All three samples share the same brand tokens — the differences below are structural layout overrides only.
 - **Hero:** illustration cropped inside a **220 × 220 colored disc** (\`var(--primary-tint)\` outer ring 4 px, white-ish inner with the image clipped circular).
 - **Pagination dots:** \`var(--primary)\` color, larger — active pill 22 × 7, inactive 7 × 7.
 - **Sheet:** white card slides up from the bottom of the canvas with \`borderTopLeftRadius / borderTopRightRadius = var(--radius-sheet)\` and an upward shadow (\`0 -8 24 rgba(0,0,0,.06)\`), pt 24, px 20, pb 32.
-- **Primary CTA:** 54 px height, **fully rounded (999 px)**, soft shadow (\`0 6 18 var(--primary)1F\`).
+- **Primary CTA:** 54 px height, button radius overridden locally to **999 px** (full pill — this is a Sample 3 layout decision, not a token override).
 - **Secondary CTA:** text-only pill (no border, no fill), 13 / 700 in \`var(--primary)\`.
 `,
 };

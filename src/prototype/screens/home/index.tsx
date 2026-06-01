@@ -90,7 +90,7 @@ const HomeScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => {
       </Box>
 
       {/* Quick Sign Up — variant-aware hero */}
-      {variant === 'playful' ? (
+      {variant === 'sample-3' ? (
         <Box sx={{ px: 2 }}>
           <Box
             onClick={() => onNavigate?.(SCREEN_IDS.ONBOARDING)}
@@ -144,7 +144,7 @@ const HomeScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => {
               gap: 1.5,
               cursor: 'pointer',
               boxShadow: ui.cardShadow,
-              border: variant === 'modern' ? `1px solid ${DESIGN_TOKENS.colors.border_light}` : 'none',
+              border: variant === 'sample-2' ? `1px solid ${DESIGN_TOKENS.colors.border_light}` : 'none',
             }}
           >
             <Box
@@ -152,7 +152,7 @@ const HomeScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => {
                 width: 48,
                 height: 48,
                 borderRadius: `${Math.max(ui.radius.card - 4, 6)}px`,
-                backgroundColor: variant === 'modern' ? '#F4F5F7' : `${ui.primary}1A`,
+                backgroundColor: variant === 'sample-2' ? '#F4F5F7' : `${ui.primary}1A`,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -169,7 +169,7 @@ const HomeScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => {
                 Sign up to apply loan faster
               </Typography>
             </Box>
-            {variant === 'modern' ? (
+            {variant === 'sample-2' ? (
               <Typography sx={{ fontSize: 13, fontWeight: 700, color: ui.primary, pr: 0.5 }}>
                 Sign up →
               </Typography>
@@ -194,7 +194,7 @@ const HomeScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => {
       )}
 
       {/* Action tiles */}
-      {variant === 'playful' ? (
+      {variant === 'sample-3' ? (
         <Box
           sx={{
             display: 'grid',
@@ -258,7 +258,7 @@ const HomeScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => {
                 alignItems: 'center',
                 gap: 0.5,
                 boxShadow: ui.cardShadow,
-                border: variant === 'modern' ? `1px solid ${DESIGN_TOKENS.colors.border_light}` : 'none',
+                border: variant === 'sample-2' ? `1px solid ${DESIGN_TOKENS.colors.border_light}` : 'none',
               }}
             >
               {t.icon}
@@ -292,8 +292,8 @@ const HomeScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => {
         </Typography>
       </Box>
 
-      {/* Products — carousel (classic) / list (modern) / hero (playful) */}
-      {variant === 'modern' ? (
+      {/* Products — carousel (sample-1) / list (sample-2) / hero (sample-3) */}
+      {variant === 'sample-2' ? (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, px: 2, mt: 1 }}>
           {PRODUCTS.map((p) => (
             <Box
@@ -339,7 +339,7 @@ const HomeScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => {
             </Box>
           ))}
         </Box>
-      ) : variant === 'playful' ? (
+      ) : variant === 'sample-3' ? (
         <Box sx={{ px: 2, mt: 1 }}>
           {(() => {
             const p = PRODUCTS[0];

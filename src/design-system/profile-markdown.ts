@@ -6,11 +6,7 @@ export const DESIGN_SYSTEM_MASTER_FILENAME = 'WeLoan_Design_System.md';
 export const buildStyleProfileMarkdown = (tokens: UiStyleTokens): string => {
   return `# WeLoan — ${tokens.name} Style Profile
 
-> ${tokens.tagline}
-
-${tokens.description}
-
-> **How to read this file.** This profile **overrides** the matching tokens in \`WeLoan_Design_System.md\`. When this profile is active, every occurrence of \`var(--primary)\` / \`--nh-blue-700\` / "primary action color" in master.md and in any screen spec must be replaced with the value below. The master file's NH Blue scale (\`#275CB2\` / \`#0052CC\` etc.) is **inert** under this profile unless a token explicitly references it.
+> **How to read this file.** This profile pins the design-system tokens that the ${tokens.name} screen variant renders against. All three samples share the same brand foundation (token values are identical); the per-Sample differences live in the screen layout, not in the tokens. Pair this file with the screen's variant notes to see what is structurally different.
 
 ## Frame (non-negotiable)
 
@@ -39,13 +35,13 @@ If a screenshot PNG (\`screen-ui_<screen>_<style>.png\`) is supplied alongside t
 
 ## Where each token applies
 
-- \`--primary\` — primary CTA backgrounds (e.g. Quick Sign Up arrow button), filled link text ("Sign up →"), active bottom-nav icon + label, active wizard step dot, focus rings, selected-state borders, outlined "RECOMMENDED" tag border + text. **This replaces every #275CB2 / #0052CC reference inherited from master.md.**
+- \`--primary\` — primary CTA backgrounds (e.g. Quick Sign Up arrow button), filled link text ("Sign up →"), active bottom-nav icon + label, active wizard step dot, focus rings, selected-state borders, outlined "RECOMMENDED" tag border + text. Resolves to NongHyup blue inherited from master.md.
 - \`--primary-hover\` — hover/pressed states of primary CTAs.
 - \`--on-primary\` — text/icon color drawn on top of a \`--primary\` fill (e.g. white arrow inside the blue button).
-- \`--primary-tint\` — tinted-on-white surfaces sitting under content (e.g. icon tile behind the ID card glyph). For Modern variants where surfaces should stay neutral, use \`--card-bg\` instead — the screen variant note will say so explicitly.
+- \`--primary-tint\` — tinted-on-white surfaces sitting under content (e.g. icon tile behind the ID card glyph).
 - \`--mobile-bg\` — the canvas behind every card on the screen.
 - \`--card-bg\` — every white tile (Quick Sign Up, action tile, product row, news banner).
-- \`--card-shadow\` — applied to cards; \`none\` for Modern keeps surfaces flat.
+- \`--card-shadow\` — applied to cards; setting it to \`none\` keeps surfaces flat.
 - \`--radius-card\` / \`--radius-button\` / \`--radius-sheet\` — override the master's 12/8/16 defaults.
 - \`--frame-*\` — describe the device-frame mockup that wraps the rendered screen.
 - \`--accent-bar\` — when set, draw a 3px horizontal bar in this color at the TOP of the mobile frame (above the status bar/header). When \`none\`, draw nothing.

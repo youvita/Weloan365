@@ -20,13 +20,13 @@ import { StyleOverrideProvider, useSettings } from '../providers/SettingsProvide
 import { UI_STYLE_IDS, UI_STYLES, UiStyleId } from '../../design-system/variants';
 
 type PreviewTab = 'ux' | 'ui' | 'design-system';
-const UX_BASELINE_STYLE: UiStyleId = 'classic';
+const UX_BASELINE_STYLE: UiStyleId = 'sample-1';
 const SAMPLE_SELECTION_PREFIX = 'weloan365.sampleSelection.';
 
 const readSelectedSample = (screenId: string): UiStyleId => {
   if (typeof window === 'undefined') return UX_BASELINE_STYLE;
   const v = window.localStorage.getItem(`${SAMPLE_SELECTION_PREFIX}${screenId}`);
-  if (v === 'classic' || v === 'modern' || v === 'playful') return v;
+  if (v === 'sample-1' || v === 'sample-2' || v === 'sample-3') return v;
   return UX_BASELINE_STYLE;
 };
 
@@ -584,9 +584,6 @@ const UiOption: React.FC<{
             />
           )}
         </Stack>
-        <Typography sx={{ fontSize: 11, color: DESIGN_TOKENS.colors.text_tertiary, mt: 0.25 }}>
-          {tokens.tagline}
-        </Typography>
       </Box>
 
       <Box

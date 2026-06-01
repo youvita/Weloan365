@@ -6,7 +6,7 @@ export const HOME_MARKDOWN = `# Home Screen — New Customer
 
 **Screen:** Home
 **Status:** Production Ready
-**Background:** \`var(--mobile-bg)\` (Classic = #F2F3F5)
+**Background:** \`var(--mobile-bg)\` (Sample 1 = #F2F3F5)
 
 ## Frame (non-negotiable)
 
@@ -27,9 +27,9 @@ export const HOME_MARKDOWN = `# Home Screen — New Customer
 Header logo alt              "NongHyup Finance (Cambodia) Plc"
 Quick Sign Up title          "Quick Sign Up"
 Quick Sign Up subtitle       "Sign up to apply loan faster"
-Quick Sign Up CTA (Classic)  "→" (icon only, no label)
-Quick Sign Up CTA (Modern)   "Sign up →"
-Quick Sign Up CTA (Playful)  "Start now →"
+Quick Sign Up CTA (Sample 1) "→" (icon only, no label)
+Quick Sign Up CTA (Sample 2) "Sign up →"
+Quick Sign Up CTA (Sample 3) "Start now →"
 Action tile 1                "Browse Loan"
 Action tile 2                "Calculator"
 Action tile 3                "Consult"
@@ -39,8 +39,8 @@ Product 1 name               "Micro Loan"
 Product 1 size               "Up to $100 – $3,000"
 Product 1 term               "≤ 48 mo"
 Product 1 rate               "1.2%"
-Product 1 badge              "RECOMMENDED"   (Classic uppercase tag)
-                             "Recommended"   (Modern outlined tag / Playful pill)
+Product 1 badge              "RECOMMENDED"   (Sample 1 uppercase tag)
+                             "Recommended"   (Sample 2 outlined tag / Sample 3 pill)
 Product 2 name               "Small Business Loan"
 Product 2 size               "Up to $30,000"
 Product 2 term               "≤ 96 mo"
@@ -90,7 +90,7 @@ Card sublines combine size and term with " · " separator inside the same second
   - Consult → \`/assets/icons/ico_consult.svg\`
 - Label: 11px, weight 500, color #1A1A1A, line-height 1
 
-### Product Cards (Micro Loan / Small Business Loan) — Classic carousel only
+### Product Cards (Micro Loan / Small Business Loan) — Sample 1 carousel only
 - **Container:** flex-basis 78%, white, border-radius 12px, overflow hidden, box-shadow \`var(--card-shadow)\`
 - **Title row:** icon \`/assets/icons/ico_storefront.svg\` 18 × 18 in #1A1A1A + label (14px, weight 700, #1A1A1A), padding 12 horizontal / 8 vertical
 - **Image area:** **exactly 130 px tall**, gradient background
@@ -132,7 +132,7 @@ Card sublines combine size and term with " · " separator inside the same second
 `;
 
 export const HOME_VARIANT_NOTES: Record<UiStyleId, string> = {
-  classic: `## Sample 1 (Classic) — variant notes
+  'sample-1': `## Sample 1 — variant notes
 
 Baseline implementation. Layout matches the master spec above exactly. Frame stays at 375 × 760.
 - Quick Sign Up card with rounded arrow CTA (icon only, no text label).
@@ -140,23 +140,21 @@ Baseline implementation. Layout matches the master spec above exactly. Frame sta
 - **Horizontal product carousel** (Micro Loan + Small Business Loan), 78% snap width, with the gradient image area + LOAN SIZE / INTEREST RATE overlay described in master.
 - Single news banner (exactly 110 px tall) with 3-pill-dot pagination underneath.
 `,
-  modern: `## Sample 2 (Modern) — variant notes
+  'sample-2': `## Sample 2 — variant notes
 
-Editorial, dense, list-first reading. Frame stays at 375 × 760. All overrides below assume \`var(--primary)\` resolves to the Modern primary defined in the style profile (charcoal \`#111827\`).
+Editorial, dense, list-first reading. Frame stays at 375 × 760. All three samples share the same brand tokens — the differences below are structural layout overrides only.
 
-- **Quick Sign Up:** card gains a hairline border (1px #E0E0E0); the rounded arrow button is replaced with an inline text link "Sign up →", font 13px / 700, color \`var(--primary)\` (no background, no chip). The ID-card icon tile background becomes a neutral \`#F4F5F7\` (NOT a primary tint) — Modern keeps surfaces neutral.
+- **Quick Sign Up:** card gains a hairline border (1px #E0E0E0); the rounded arrow button is replaced with an inline text link "Sign up →", font 13px / 700, color \`var(--primary)\` (no background, no chip). The ID-card icon tile background becomes a neutral \`#F4F5F7\` (NOT a primary tint) — Sample 2 keeps surfaces flat and neutral.
 - **Action tiles:** outlined (1px #E0E0E0), no shadow, no primary tint behind the icon — flat white tiles, icons in #1A1A1A.
-- **Products carousel → vertical list.** Each product is its own row inside its own outlined card (1px #E0E0E0), height ~64 px, padding 12/14: storefront icon (18 × 18 in \`var(--primary)\`) · title (14 / 700) + optional outlined "RECOMMENDED" tag (9px / 700, 1px border in \`var(--primary)\`, text in \`var(--primary)\`, padding 6/2) · "size · term" sub (11px, secondary) · large tabular rate "1.2%" on the right (18px / 800). **No gradient image area, no LOAN SIZE/INTEREST RATE overlay** — those belong to the Classic carousel only.
+- **Products carousel → vertical list.** Each product is its own row inside its own outlined card (1px #E0E0E0), height ~64 px, padding 12/14: storefront icon (18 × 18 in \`var(--primary)\`) · title (14 / 700) + optional outlined "RECOMMENDED" tag (9px / 700, 1px border in \`var(--primary)\`, text in \`var(--primary)\`, padding 6/2) · "size · term" sub (11px, secondary) · large tabular rate "1.2%" on the right (18px / 800). **No gradient image area, no LOAN SIZE/INTEREST RATE overlay** — those belong to the Sample 1 carousel only.
 - **News & Promotions:** unchanged — pure image card at exactly 110 px tall. Do not add a gradient overlay or rate badge here.
-- **Dark accent bar:** a 3px bar in \`var(--primary)\` sits at the very TOP of the mobile frame (above the status bar / header), spanning the full frame width — NOT on the bottom nav.
-- **Bottom nav active state:** uses \`var(--primary)\` (charcoal #111827), NOT the master design system's NH Blue.
 `,
-  playful: `## Sample 3 (Playful) — variant notes
+  'sample-3': `## Sample 3 — variant notes
 
-Hero-led, rounded, action-driven. Frame stays at 375 × 760.
+Hero-led, action-driven. Frame stays at 375 × 760. All three samples share the same brand tokens — the differences below are structural layout overrides only.
 - **Quick Sign Up:** replaced with a full-width gradient hero card (\`linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%)\`), padding 16, color \`var(--on-primary)\`. Eyebrow "NEW HERE?" (11 / 700, opacity 0.85), display headline "Apply in 2 minutes" (22 / 800, line-height 1.1), supporting body "Sign up, scan ID, get a decision." (12, opacity 0.9), white pill CTA "Start now →" (12 / 700, padding 12/6, radius 999, background \`var(--on-primary)\`, text \`var(--primary)\`).
-- **Action tiles:** larger square cards (\`var(--card-bg)\`, radius \`var(--radius-card)\` + 4, py 12, gap 4) with a soft-colored disc behind each icon (\`var(--primary-tint)\`, 36 × 36 circle).
+- **Action tiles:** Sample 3 wraps each icon in a 36 × 36 \`var(--primary-tint)\` disc (vs the flat icons in Sample 1 / 2). The tiles themselves use \`var(--card-bg)\` and \`var(--radius-card)\` from shared tokens.
 - **Products:** single hero product card (Micro Loan only). Image hero band on top (140 px tall, gradient) with a pill "Recommended" tag in \`var(--primary)\` (top-right); bottom row shows "Term · ≤ 48 mo" left + a pill "Apply →" CTA right.
-- **Buttons:** all primary CTAs use a 999px radius (full pill).
+- **Buttons:** all primary CTAs on this variant override the button radius to 999 (full pill) — this is a layout decision local to Sample 3, not a token override.
 `,
 };

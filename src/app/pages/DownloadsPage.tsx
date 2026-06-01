@@ -12,7 +12,15 @@ import {
 import { UI_STYLE_IDS } from '../../design-system/variants';
 
 const DownloadsPage: React.FC = () => {
-  const fullSpec = SCREENS.map((s) => s.markdown).join('\n\n---\n\n');
+  // Each screen contributes its base spec plus every per-Sample variant note,
+  // separated by `---`. The style profiles are identical across samples now, so
+  // the variant notes are the only thing carrying the per-Sample differences.
+  const fullSpec = SCREENS.map((s) => {
+    const notes = UI_STYLE_IDS
+      .map((id) => s.variantNotes?.[id]?.trimEnd())
+      .filter((n): n is string => Boolean(n));
+    return [s.markdown.trimEnd(), ...notes].join('\n\n---\n\n');
+  }).join('\n\n---\n\n');
 
   const allAssets = Array.from(
     new Map(SCREENS.flatMap((s) => s.assets).map((a) => [a.url, a])).values(),

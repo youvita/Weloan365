@@ -22,8 +22,8 @@ const CreateAccountScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => 
   const { uiTokens: ui, uiStyleId } = useSettings();
   const variant = uiStyleId;
 
-  const isModern = variant === 'modern';
-  const isPlayful = variant === 'playful';
+  const isSample2 = variant === 'sample-2';
+  const isSample3 = variant === 'sample-3';
 
   return (
     <Box sx={{ minHeight: '100%', backgroundColor: ui.mobileBg, display: 'flex', flexDirection: 'column' }}>
@@ -62,8 +62,8 @@ const CreateAccountScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => 
         </Box>
       </Box>
 
-      {/* Progress indicator — bar (classic) / numbered dots (modern) / pill (playful) */}
-      {isModern ? (
+      {/* Progress indicator — bar (sample-1) / numbered dots (sample-2) / pill (sample-3) */}
+      {isSample2 ? (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, px: 2, mt: 0.5, mb: 2.5 }}>
           <Typography sx={{ fontSize: 11, fontWeight: 700, color: DESIGN_TOKENS.colors.text_tertiary, letterSpacing: 0.5 }}>
             STEP 1 OF 3
@@ -81,7 +81,7 @@ const CreateAccountScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => 
             ))}
           </Box>
         </Box>
-      ) : isPlayful ? (
+      ) : isSample3 ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, px: 2, mt: 0.5, mb: 2.5 }}>
           {[1, 2, 3].map((n) => {
             const active = n === 1;
@@ -125,12 +125,12 @@ const CreateAccountScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => 
       <Box sx={{ px: 2 }}>
         <Typography
           sx={{
-            fontSize: isPlayful ? 26 : isModern ? 22 : 24,
-            fontWeight: isPlayful ? 800 : 700,
+            fontSize: isSample3 ? 26 : isSample2 ? 22 : 24,
+            fontWeight: isSample3 ? 800 : 700,
             color: '#1A1A1A',
             mb: 0.5,
-            textAlign: isPlayful ? 'center' : 'left',
-            letterSpacing: isModern ? -0.5 : 0,
+            textAlign: isSample3 ? 'center' : 'left',
+            letterSpacing: isSample2 ? -0.5 : 0,
           }}
         >
           Create your account
@@ -140,14 +140,14 @@ const CreateAccountScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => 
             fontSize: 13,
             color: DESIGN_TOKENS.colors.text_secondary,
             mb: 2.5,
-            textAlign: isPlayful ? 'center' : 'left',
+            textAlign: isSample3 ? 'center' : 'left',
           }}
         >
           We'll send a verification code to your number.
         </Typography>
 
-        {/* Modern: minimal underline inputs in a single stacked column */}
-        {isModern ? (
+        {/* Sample 2: minimal underline inputs in a single stacked column */}
+        {isSample2 ? (
           <Box>
             <Box sx={{ mb: 2 }}>
               <Typography sx={{ fontSize: 11, fontWeight: 700, color: DESIGN_TOKENS.colors.text_tertiary, letterSpacing: 0.5, mb: 0.5 }}>
@@ -197,8 +197,8 @@ const CreateAccountScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => 
               </Box>
             </Box>
           </Box>
-        ) : isPlayful ? (
-          // Playful: pill-shaped inputs in floating card
+        ) : isSample3 ? (
+          // Sample 3: pill-shaped inputs in floating card
           <Box
             sx={{
               backgroundColor: ui.cardBg,
@@ -274,7 +274,7 @@ const CreateAccountScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => 
             </Box>
           </Box>
         ) : (
-          // Classic — default
+          // Sample 1 — default
           <>
             <Box
               sx={{
@@ -369,16 +369,16 @@ const CreateAccountScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => 
           sx={{
             backgroundColor: ui.primary,
             color: ui.onPrimary,
-            height: isPlayful ? 56 : 52,
-            borderRadius: isPlayful ? 999 : `${ui.radius.button}px`,
-            fontSize: isPlayful ? 16 : 15,
-            fontWeight: isPlayful ? 700 : 600,
+            height: isSample3 ? 56 : 52,
+            borderRadius: isSample3 ? 999 : `${ui.radius.button}px`,
+            fontSize: isSample3 ? 16 : 15,
+            fontWeight: isSample3 ? 700 : 600,
             textTransform: 'none',
-            boxShadow: isPlayful ? ui.cardShadow : 'none',
+            boxShadow: isSample3 ? ui.cardShadow : 'none',
             '&:hover': { backgroundColor: ui.primaryHover },
           }}
         >
-          {isPlayful ? 'Send my code →' : 'Send code'}
+          {isSample3 ? 'Send my code →' : 'Send code'}
         </Button>
       </Box>
     </Box>

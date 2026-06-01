@@ -241,37 +241,14 @@ const DevUiView: React.FC<{
   activeStyleId: UiStyleId;
 }> = ({ screen, nextScreen, Component, onScreenNavigate, activeStyleId }) => {
   const tokens = UI_STYLES[activeStyleId];
-  const previewRef = React.useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = React.useState(false);
   const [copied, setCopied] = React.useState(false);
 
   const handleDownload = async () => {
-    if (!previewRef.current) return;
     setDownloading(true);
     try {
       const zip = new JSZip();
       const missing: string[] = [];
-
-      const screenshot = await captureScreenUi(previewRef.current);
-      if (screenshot) {
-        zip.file(`screen-ui_${screen.id}_${activeStyleId}.png`, screenshot);
-      } else {
-        missing.push(`screen-ui_${screen.id}_${activeStyleId}.png`);
-      }
-
-      // Screen spec (variant-aware): the master spec + the style's variant note appended.
-      zip.file(`WeLoan365_${screen.id}_${activeStyleId}_Spec.md`, variantMarkdown);
-
-      // Style profile for the active sample.
-      zip.file(getStyleProfileFilename(activeStyleId), getStyleProfileMarkdown(activeStyleId));
-
-      // Master design system (fetched from /public).
-      const masterBlob = await fetchAssetBlob(DESIGN_SYSTEM_MASTER_URL);
-      if (masterBlob) {
-        zip.file(DESIGN_SYSTEM_MASTER_FILENAME, masterBlob);
-      } else {
-        missing.push(DESIGN_SYSTEM_MASTER_FILENAME);
-      }
 
       const assetsFolder = zip.folder('assets')!;
       for (const asset of screen.assets as ScreenAsset[]) {
@@ -291,7 +268,7 @@ const DevUiView: React.FC<{
       }
 
       const blob = await zip.generateAsync({ type: 'blob' });
-      saveAs(blob, `WeLoan365_${screen.id}_${activeStyleId}_UI.zip`);
+      saveAs(blob, `WeLoan365_${screen.id}_Assets.zip`);
     } finally {
       setDownloading(false);
     }
@@ -351,13 +328,11 @@ const DevUiView: React.FC<{
             }}
           />
         </Stack>
-        <Box ref={previewRef}>
-          <StyleOverrideProvider styleId={activeStyleId}>
-            <MobilePreview>
-              <Component onNavigate={onScreenNavigate} />
-            </MobilePreview>
-          </StyleOverrideProvider>
-        </Box>
+        <StyleOverrideProvider styleId={activeStyleId}>
+          <MobilePreview>
+            <Component onNavigate={onScreenNavigate} />
+          </MobilePreview>
+        </StyleOverrideProvider>
         <Typography
           sx={{
             mt: 1.5,
@@ -383,7 +358,7 @@ const DevUiView: React.FC<{
               SPECIFICATION
             </Typography>
             <Typography sx={{ fontSize: 13, color: DESIGN_TOKENS.colors.text_secondary }}>
-              Engineering metadata for this screen. The download bundles the rendered Screen UI screenshot, the variant-aware screen spec, the active style profile, the master design system, and every asset this screen uses.
+              Engineering metadata for this screen. The download bundles every asset this screen uses (icons, banners, illustrations, flags, logos) — nothing else. Use “Download MD” below for the markdown spec.
             </Typography>
           </Box>
           <Button
@@ -399,7 +374,7 @@ const DevUiView: React.FC<{
               fontWeight: 600,
             }}
           >
-            {downloading ? 'Packaging…' : 'Download UX/UI Spec'}
+            {downloading ? 'Packaging…' : 'Download Assets'}
           </Button>
         </Stack>
 

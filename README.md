@@ -166,9 +166,57 @@ src/
 3. Import the new `config` into `src/prototype/registry.ts` and add it to the `SCREENS` array.
 4. If you want the new screen to follow another one in the overview flow, set the `next` field on the predecessor's `config.ts`.
 
+> **Shortcut — use the `/new-screen` slash command.** Section 7 below documents two reusable slash commands that automate the four-file scaffold, registry wiring, and Sample 1/2/3 layouts. Reach for those instead of hand-copying `home/` when you're starting from scratch.
+
 ---
 
-## 7. Adding or editing an asset
+## 7. Slash commands — scaffolding screens and flows
+
+This project ships two Claude Code slash commands under `.claude/commands/` that automate the scaffolding rules in section 6. They encode the conventions (4-file folder, `flow` value, Sample 1/2/3 layouts, asset discipline, registry wiring, verification gates) so you don't have to re-derive them every time.
+
+| Command | What it scaffolds | Source |
+| ------- | ----------------- | ------ |
+| `/new-screen <screen-id>` | A single screen — the four files under `src/prototype/screens/<id>/`, the `ScreenId` union update, the `SCREENS` registry entry. | [.claude/commands/new-screen.md](.claude/commands/new-screen.md) |
+| `/new-flow <flow-name>`   | A multi-screen flow — every screen in the flow (using the `/new-screen` rules per screen), `next` wiring between consecutive screens, a shared `flow` value, optional entry hook patched into an existing screen. | [.claude/commands/new-flow.md](.claude/commands/new-flow.md) |
+
+### Using `/new-screen`
+
+```
+/new-screen loan-summary
+```
+
+Claude reads the prompt with `loan-summary` as the argument and gets straight to scaffolding. If the screen name is enough to imply purpose (`login`, `loan-summary`, `dashboard`), it'll pick sensible defaults and surface every assumption in the spec's `## Assumptions` section so you can push back.
+
+Pass `/new-screen` with no argument to make Claude ask for: screen id, purpose, flow position (previous / next screen), key UI elements, and primary user action.
+
+### Using `/new-flow`
+
+```
+/new-flow Existing User Login
+```
+
+Claude asks for the ordered screen list, an optional entry hook (e.g. "from `home`, swap the Quick Sign Up CTA to enter `login`"), and per-screen briefs. Then it scaffolds every screen, batches the registry edits in one pass, sets the shared `flow` value, wires `next` between consecutive screens, and patches the entry-hook source screen if you specified one.
+
+For long flows (4+ screens), the command supports a lighter pattern where Sample 1 is the canonical layout and Sample 2 / Sample 3 each apply ONE structural override on top — so you don't owe three radically distinct designs per screen across the whole flow.
+
+### What the commands assume about Sample 1 / 2 / 3
+
+Both commands treat the three samples as **layout-only** directions over a single shared design-system foundation (`BASE_STYLE_TOKENS` in [src/design-system/variants.ts](src/design-system/variants.ts)). Component shape, arrangement, and per-Sample local layout decisions (e.g. one Sample's pill-radius CTA) are encouraged. Per-Sample tokens divergence (different primary colors, radii, shadows) is not — see section 9 if you want to genuinely fork tokens for a Sample.
+
+### Verifying after scaffolding
+
+Both commands end with a verification gate. The agent will not report done until:
+
+1. `npx tsc --noEmit` passes.
+2. The new screen(s) render under the matching flow in the sidebar's USER FLOW dropdown and on `/overview`.
+3. **Download Design System (.zip)** on each new screen ships with no `MISSING.txt`.
+4. `/downloads` → **Download bundled spec** picks up every new screen and its assets.
+
+If a slash command isn't available in your CLI yet, the source `.md` files under `.claude/commands/` are self-contained prompts — you can paste the file contents into a Claude session manually with the screen / flow argument inlined.
+
+---
+
+## 8. Adding or editing an asset
 
 Every visible image must live under `public/assets/` **and** be listed in the screen's `assets.ts`. Both are required:
 
@@ -187,7 +235,7 @@ Asset categories (folder name = `ScreenAsset['category']`):
 
 ---
 
-## 8. Editing the design system
+## 9. Editing the design system
 
 There are two layers:
 
@@ -202,7 +250,7 @@ When you add or change a token in `variants.ts`:
 
 ---
 
-## 9. Common workflows
+## 10. Common workflows
 
 ### "I want to see what Sample 3 looks like for create-account"
 - Open `/screen/create-account` → **UI** tab → click the **Sample 3** preview. The card border highlights, and the selection is saved.
@@ -218,7 +266,7 @@ When you add or change a token in `variants.ts`:
 
 ---
 
-## 10. Troubleshooting
+## 11. Troubleshooting
 
 - **Port 3000 is busy** — set a port: `PORT=3001 npm start`.
 - **Download finishes but the zip has `MISSING.txt`** — open it; it lists files that couldn't be fetched. Usually a typo in `assets.ts` (filename mismatch or wrong category folder). Fix the row and re-download.
@@ -227,7 +275,7 @@ When you add or change a token in `variants.ts`:
 
 ---
 
-## 11. Built with
+## 12. Built with
 
 - React 19 + TypeScript 4.9
 - MUI 5 (`@mui/material`, `@mui/icons-material`, Emotion)

@@ -115,7 +115,7 @@ const OnboardingScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => {
           <Box sx={{ display: 'flex', gap: 1 }}>
             <Button
               variant="contained"
-              onClick={() => onNavigate?.(SCREEN_IDS.CREATE_ACCOUNT)}
+              onClick={() => onNavigate?.(SCREEN_IDS.LOGIN)}
               sx={{
                 flex: 1,
                 backgroundColor: ui.primary,
@@ -284,7 +284,7 @@ const OnboardingScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => {
           <Button
             fullWidth
             variant="contained"
-            onClick={() => onNavigate?.(SCREEN_IDS.CREATE_ACCOUNT)}
+            onClick={() => onNavigate?.(SCREEN_IDS.LOGIN)}
             startIcon={
               <Box
                 component="img"
@@ -439,7 +439,7 @@ const OnboardingScreen: React.FC<ScreenComponentProps> = ({ onNavigate }) => {
         <Button
           fullWidth
           variant="contained"
-          onClick={() => onNavigate?.(SCREEN_IDS.CREATE_ACCOUNT)}
+          onClick={() => onNavigate?.(SCREEN_IDS.LOGIN)}
           startIcon={
             <Box
               component="img"

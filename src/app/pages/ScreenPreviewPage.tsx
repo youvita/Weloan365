@@ -379,30 +379,8 @@ const DevUiView: React.FC<{
         </Stack>
 
         <Stack spacing={1.25} sx={{ mb: 3 }}>
-          <MetaRow label="Group" value={screen.group} />
+          <MetaRow label="Flow" value={screen.flow} />
           <MetaRow label="Screen ID" value={screen.id} />
-          <MetaRow
-            label="Status"
-            value={
-              <Chip
-                label={screen.status}
-                size="small"
-                sx={{
-                  height: 22,
-                  fontSize: 11,
-                  fontWeight: 600,
-                  backgroundColor:
-                    screen.status === 'ready'
-                      ? 'rgba(40, 167, 69, 0.12)'
-                      : 'rgba(255, 165, 0, 0.12)',
-                  color:
-                    screen.status === 'ready'
-                      ? DESIGN_TOKENS.colors.success_green
-                      : DESIGN_TOKENS.colors.brand_logo_orange,
-                }}
-              />
-            }
-          />
           <MetaRow
             label="Next screen"
             value={

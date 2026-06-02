@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Box,
   Drawer,
@@ -7,16 +7,15 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  ListSubheader,
   MenuItem,
   Select,
   Typography,
-  Chip,
 } from '@mui/material';
 import { SettingsOutlined } from '@mui/icons-material';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { SCREEN_GROUPS, USER_GROUPS } from '../../prototype/registry';
+import { SCREEN_FLOWS, USER_FLOWS } from '../../prototype/registry';
 import { DESIGN_TOKENS, SIDEBAR_WIDTH } from '../../design-system/tokens';
+import { useSettings } from '../providers/SettingsProvider';
 
 export interface SidebarProps {
   mobileOpen: boolean;
@@ -28,98 +27,91 @@ const SidebarContent: React.FC = () => {
   const { id: activeId } = useParams();
   const { pathname } = useLocation();
   const isSettings = pathname.startsWith('/settings');
-  const [userGroup, setUserGroup] = useState(USER_GROUPS[0]);
+  const { selectedFlow, setSelectedFlow } = useSettings();
+
+  // Only show flow options that actually have at least one registered screen.
+  const populatedFlowNames = React.useMemo(() => {
+    const populated = new Set(SCREEN_FLOWS.map((f) => f.flow));
+    return USER_FLOWS.filter((name) => populated.has(name));
+  }, []);
+
+  // Resolve the active flow object so we can iterate its screens.
+  const activeFlow = React.useMemo(
+    () => SCREEN_FLOWS.find((f) => f.flow === selectedFlow),
+    [selectedFlow],
+  );
+
+  // Changing the flow while viewing a specific screen would otherwise leave the
+  // user looking at a screen that's no longer in the selected flow's list.
+  // Bounce them to /overview so they immediately see the new flow's screens.
+  const handleFlowChange = React.useCallback(
+    (next: string) => {
+      setSelectedFlow(next);
+      if (pathname.startsWith('/screen/')) navigate('/overview');
+    },
+    [navigate, pathname, setSelectedFlow],
+  );
 
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Box sx={{ p: 2, borderBottom: `1px solid ${DESIGN_TOKENS.colors.border_light}` }}>
         <Typography sx={{ fontSize: 11, fontWeight: 600, color: DESIGN_TOKENS.colors.text_tertiary, mb: 1, letterSpacing: 0.5 }}>
-          USER GROUP
+          USER FLOW
         </Typography>
         <FormControl fullWidth size="small">
           <Select
-            value={userGroup}
-            onChange={(e) => setUserGroup(e.target.value)}
+            value={selectedFlow}
+            onChange={(e) => handleFlowChange(e.target.value)}
             sx={{ fontSize: 14 }}
           >
-            {USER_GROUPS.map((g) => (
-              <MenuItem key={g} value={g} sx={{ fontSize: 14 }}>
-                {g}
+            {populatedFlowNames.map((f) => (
+              <MenuItem key={f} value={f} sx={{ fontSize: 14 }}>
+                {f}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
       </Box>
 
-      <Box sx={{ flex: 1, overflowY: 'auto' }}>
+      <Box sx={{ flex: 1, overflowY: 'auto', pt: 1 }}>
         <List dense disablePadding>
-          {SCREEN_GROUPS.map(({ group, items }) => (
-            <Box key={group}>
-              <ListSubheader
+          {(activeFlow?.items ?? []).map((s) => {
+            const selected = activeId === s.id;
+            return (
+              <ListItemButton
+                key={s.id}
+                selected={selected}
+                onClick={() => navigate(`/screen/${s.id}`)}
                 sx={{
-                  backgroundColor: 'transparent',
-                  color: DESIGN_TOKENS.colors.text_tertiary,
-                  fontSize: 11,
-                  fontWeight: 600,
-                  letterSpacing: 0.5,
-                  lineHeight: '32px',
-                  px: 2,
-                  pt: 1.5,
+                  mx: 1,
+                  borderRadius: 1.5,
+                  mb: 0.25,
+                  '&.Mui-selected': {
+                    backgroundColor: 'rgba(0, 82, 204, 0.08)',
+                    '&:hover': { backgroundColor: 'rgba(0, 82, 204, 0.12)' },
+                  },
                 }}
               >
-                {group.toUpperCase()}
-              </ListSubheader>
-              {items.map((s) => {
-                const selected = activeId === s.id;
-                return (
-                  <ListItemButton
-                    key={s.id}
-                    selected={selected}
-                    onClick={() => navigate(`/screen/${s.id}`)}
-                    sx={{
-                      mx: 1,
-                      borderRadius: 1.5,
-                      mb: 0.25,
-                      '&.Mui-selected': {
-                        backgroundColor: 'rgba(0, 82, 204, 0.08)',
-                        '&:hover': { backgroundColor: 'rgba(0, 82, 204, 0.12)' },
-                      },
-                    }}
-                  >
-                    <ListItemText
-                      primary={s.title}
-                      secondary={s.subtitle}
-                      primaryTypographyProps={{
-                        fontSize: 14,
-                        fontWeight: selected ? 600 : 500,
-                        color: selected
-                          ? DESIGN_TOKENS.colors.primary_blue
-                          : DESIGN_TOKENS.colors.text_primary,
-                      }}
-                      secondaryTypographyProps={{ fontSize: 11 }}
-                    />
-                    <Chip
-                      label={s.status}
-                      size="small"
-                      sx={{
-                        height: 18,
-                        fontSize: 10,
-                        fontWeight: 600,
-                        backgroundColor:
-                          s.status === 'ready'
-                            ? 'rgba(40, 167, 69, 0.12)'
-                            : 'rgba(255, 165, 0, 0.12)',
-                        color:
-                          s.status === 'ready'
-                            ? DESIGN_TOKENS.colors.success_green
-                            : DESIGN_TOKENS.colors.brand_logo_orange,
-                      }}
-                    />
-                  </ListItemButton>
-                );
-              })}
-            </Box>
-          ))}
+                <ListItemText
+                  primary={s.title}
+                  secondary={s.subtitle}
+                  primaryTypographyProps={{
+                    fontSize: 14,
+                    fontWeight: selected ? 600 : 500,
+                    color: selected
+                      ? DESIGN_TOKENS.colors.primary_blue
+                      : DESIGN_TOKENS.colors.text_primary,
+                  }}
+                  secondaryTypographyProps={{ fontSize: 11 }}
+                />
+              </ListItemButton>
+            );
+          })}
+          {!activeFlow?.items.length && (
+            <Typography sx={{ px: 2, py: 1.5, fontSize: 12, color: DESIGN_TOKENS.colors.text_tertiary }}>
+              No screens registered for this flow yet.
+            </Typography>
+          )}
         </List>
       </Box>
 

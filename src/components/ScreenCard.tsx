@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Chip, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import MobilePreview from './MobilePreview';
@@ -13,15 +13,8 @@ export interface ScreenCardProps {
   index?: number;
 }
 
-const STATUS_COLOR: Record<string, { bg: string; fg: string; label: string }> = {
-  ready: { bg: 'rgba(40, 167, 69, 0.12)', fg: '#1F7A36', label: 'Ready' },
-  'in-review': { bg: 'rgba(255, 165, 0, 0.15)', fg: '#A06A00', label: 'In review' },
-  draft: { bg: 'rgba(102, 102, 102, 0.15)', fg: '#444', label: 'Draft' },
-};
-
 const ScreenCard: React.FC<ScreenCardProps> = ({ screen, index = 0 }) => {
   const navigate = useNavigate();
-  const status = STATUS_COLOR[screen.status] ?? STATUS_COLOR.draft;
   const Component = screen.component;
 
   return (
@@ -52,34 +45,13 @@ const ScreenCard: React.FC<ScreenCardProps> = ({ screen, index = 0 }) => {
           },
         }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            mb: 1.5,
-            px: 0.5,
-          }}
-        >
-          <Box>
-            <Typography sx={{ fontSize: 11, color: DESIGN_TOKENS.colors.text_tertiary, fontWeight: 600 }}>
-              {String(index + 1).padStart(2, '0')} · {screen.group}
-            </Typography>
-            <Typography sx={{ fontSize: 15, fontWeight: 700, color: DESIGN_TOKENS.colors.text_primary }}>
-              {screen.title}
-            </Typography>
-          </Box>
-          <Chip
-            label={status.label}
-            size="small"
-            sx={{
-              height: 22,
-              fontSize: 11,
-              fontWeight: 600,
-              backgroundColor: status.bg,
-              color: status.fg,
-            }}
-          />
+        <Box sx={{ mb: 1.5, px: 0.5 }}>
+          <Typography sx={{ fontSize: 11, color: DESIGN_TOKENS.colors.text_tertiary, fontWeight: 600 }}>
+            {String(index + 1).padStart(2, '0')} · {screen.flow}
+          </Typography>
+          <Typography sx={{ fontSize: 15, fontWeight: 700, color: DESIGN_TOKENS.colors.text_primary }}>
+            {screen.title}
+          </Typography>
         </Box>
 
         <StyleOverrideProvider styleId={DEFAULT_UI_STYLE}>
